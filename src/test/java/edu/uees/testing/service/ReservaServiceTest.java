@@ -16,6 +16,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+
 class ReservaServiceTest {
 
     private final ReservaService servicio = new ReservaService(null, null, null);
@@ -187,5 +188,16 @@ class ReservaServiceTest {
         verify(disponibilidad).estaDisponible(reserva);
         verify(repository).guardar(reserva);
         verify(notificador).enviarConfirmacion(reserva);
+    }
+        @Test
+    void cancelarCambiaEstadoACancelada() {
+        // Arrange
+        Reserva reserva = new Reserva("R-003", "NORMAL");
+
+        // Act
+        reserva.cancelar();
+
+        // Assert
+        assertEquals("CANCELADA", reserva.getEstado().name());
     }
 }
